@@ -1,0 +1,12 @@
+torch>=1.7
+torchvision
+plotly
+opencv-python-headless==4.5.5.64
+scikit-learn>=0.18
+tqdm==4.19.6
+utils
+matplotlib
+timm
+nltk==3.8.1
+streamlit
+dataset
