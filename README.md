@@ -1,76 +1,74 @@
-# RecipeSnap - a lightweight pretrained model to predict recipe from image
+# Server App Deployment Guide
 
-We implemented a lightweight image to recipe prediction model. We used MobileNet_v2 as image encoder backbone. This model only has 3 million parameters and can be easily deployed on portable devices.
+This guide provides instructions for deploying the server app on your own machine. Follow the steps below to set up the necessary environment and run the application.
 
-This is the PyTorch companion code for the paper:
+## Prerequisites
 
-*Jianfa Chen, Yue Yin, Yifan Xu. [RecipeSnap -- a lightweight image-to-recipe model](https://doi.org/10.48550/arxiv.2205.02141)*
+Before proceeding with the deployment, ensure that you have the following prerequisites installed:
 
-If you find this code useful in your research, please consider citing using the following BibTeX entry:
-
-```
-@misc{https://doi.org/10.48550/arxiv.2205.02141,
-  doi = {10.48550/ARXIV.2205.02141},
-  
-  url = {https://arxiv.org/abs/2205.02141},
-  
-  author = {Chen, Jianfa and Yin, Yue and Xu, Yifan},
-  
-  keywords = {Computer Vision and Pattern Recognition (cs.CV), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  
-  title = {RecipeSnap -- a lightweight image-to-recipe model},
-  
-  publisher = {arXiv},
-  
-  year = {2022},
-  
-  copyright = {Creative Commons Attribution 4.0 International}
-}
-```
-
-## Cloning 
-
-```
-git clone https://github.com/jianfa/RecipeSnap-a-lightweight-recipe-to-image-model.git
-```
-These files can optionally be ignored by using ```git lfs install --skip-smudge``` before cloning the repository, and can be downloaded at any time using ```git lfs pull```.
+1. Python 3.7 or later
+2. pip package manager
+3. Git
 
 ## Installation
 
-- Create conda environment: ```conda env create -f environment.yml```
-- Activate it with ```conda activate recipe_snap```
+1. Clone the repository by running the following command in your terminal or command prompt:
+   ```
+   git clone https://github.com/capanokevin/food-app.git
+   ```
 
+2. Change your current directory to the cloned repository:
+   ```
+   cd food-app
+   ```
 
-## Data preparation
-Recipe embeddings can be download here:
-1. feats_test.pkl (Included in data/recipe_embeddings folder)
-2. [feats_train.pkl](https://drive.google.com/file/d/17UJyO00yRzwn5hnZ4-wMfH1vkMihyqNn/view?usp=sharing) (**Optional**)   
+3. Install the required Python packages by running the following command:
+   ```
+   pip install -r requirements.txt
+   ```
 
-Please save these two files to data/recipe_embeddings/
+## Usage
 
-Recipes can be download here:
-1. test.pkl (Included in data/recipe_lib folder)
-2. test_noimage.pkl (Included in data/recipe_lib folder)
-3. [train.pkl](https://drive.google.com/file/d/17UJyO00yRzwn5hnZ4-wMfH1vkMihyqNn/view?usp=sharing) (**Optional**)
-4. [train_noimages.pkl](https://drive.google.com/file/d/17UJyO00yRzwn5hnZ4-wMfH1vkMihyqNn/view?usp=sharing) (**Optional**)
+1. Open the Python script file named `food.py` in a text editor.
 
-Plase save these two files to data/recipe_dict/
+2. Locate the following lines in the script:
 
+   ```python
+   line 27: image_dir = '\images'
+   line 28: checkpoint_dir = "\checkpoints\model"
+   line 29: recipe_emb_path = "\data\recipe_embeddings\recipe_embeddings_feats_test.pkl" 
+   line 30: recipe_dict_path = "\data\recipe_dict\test.pkl"
+   
+   line 133: '..\dashboard_image\dashboard_image.jpg'
+   line 149: '..\collected_images\'
+   ```
 
-## Training
+   Replace these paths with the appropriate paths on your own machine where the required files and directories are located.
+   
+   Open the Python script file named `recipe_snap.py` and go to line 205. Replace the following paths:
+   ```python
+   line 205: "..\dashboard_image"
+   line 42:  "best_model_4channel_prova2_c.pt"
+   ```
+   with the appropriate paths on your own machine, where the folder and model weights are located.
 
-We used pretrained recipe encoder from [image-to-recipe-transformers](https://github.com/amzn/image-to-recipe-transformers) and dataset from [Recipe1M](http://im2recipe.csail.mit.edu/dataset/download) to train our model. 
+3. Save the changes to the script.
 
-## Evaluation
-| Split | loss | MedR | Recall_1 | Recall_5 | Recall_10 |  
-|-------|------|------|----------|----------|-----------|  
-| train | 0.0133 | 2.0000 | 0.4536 | 0.7911 | 0.8913 |  
-| val  | 0.0267 | 2.0000 | 0.4123 | 0.7187 | 0.8210 |  
+4. Run the server app by executing the following command in the terminal or command prompt:
+   ```
+   streamlit run 'path where food.py is stored'
+   ```
 
-## Example
+5. The server app should now be running locally on your machine.
 
-Both demo.py and display.ipynb provide a usage example.
+6. Use the file uploader or camera input to upload or take a picture of an image containing food.
 
-## License
+7. The app will process the image and display the uploaded image along with the predicted recipe and nutritional facts.
 
-This project is licensed under the Apache-2.0 License.
+8. Click on the recipe buttons to view the ingredients and procedure for each recipe.
+
+9. The nutritional facts will be displayed, showing the estimated values for calories, carbohydrates, proteins, fats, and mass (in grams) based on the uploaded image.
+
+10. Enjoy using the server app to analyze food images and explore recipe and nutritional information!
+
+Note: Make sure to keep the terminal or command prompt open while running the server app. If you want to stop the app, press `Ctrl + C` in the terminal or command prompt.
